@@ -21,6 +21,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const data = await login(loginData);
+      console.log('TOken is :',data);
       Auth.login(data.token);
     } catch (err) {
       console.error('Failed to login', err);
@@ -35,6 +36,7 @@ const Login = () => {
         <input 
           type='text'
           name='username'
+          id='username'
           value={loginData.username || ''}
           onChange={handleChange}
         />
@@ -42,6 +44,7 @@ const Login = () => {
         <input 
           type='password'
           name='password'
+          id='password'
           value={loginData.password || ''}
           onChange={handleChange}
         />

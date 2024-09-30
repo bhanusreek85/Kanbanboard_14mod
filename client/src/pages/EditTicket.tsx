@@ -1,8 +1,8 @@
 import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 import { retrieveTicket, updateTicket } from '../api/ticketAPI';
 import { TicketData } from '../interfaces/TicketData';
+import auth from '../utils/auth';
 
 const EditTicket = () => {
   const [ticket, setTicket] = useState<TicketData | undefined>();
@@ -19,20 +19,33 @@ const EditTicket = () => {
     }
   }
 
+  if(!auth.loggedIn()){
+    auth.logout();
+    // window.location.assign('/login');
+     return;
+  }
   useEffect(() => {
+   
     fetchTicket(state);
   }, []);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (ticket && ticket.id !== null){
+      try{
       updateTicket(ticket.id, ticket);
       navigate('/');
-    }
-    else{
-      console.error('Ticket data is undefined.');
-    }
-  }
+    }catch (err) {
+      if (err instanceof Error && (err as any).response && (err as any).response.status === 401) {
+        auth.logout();
+        navigate('/login');
+      }}
+    
+   }else {
+    console.error('Ticket data is undefined.');
+   }
+}
+
 
   const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -43,6 +56,7 @@ const EditTicket = () => {
     const { name, value } = e.target;
     setTicket((prev) => (prev ? { ...prev, [name]: value } : undefined));
   };
+
 
   return (
     <>

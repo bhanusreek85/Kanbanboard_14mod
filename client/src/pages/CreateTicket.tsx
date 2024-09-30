@@ -4,6 +4,7 @@ import { createTicket } from '../api/ticketAPI';
 import { TicketData } from '../interfaces/TicketData';
 import { UserData } from '../interfaces/UserData';
 import { retrieveUsers } from '../api/userAPI';
+import auth from '../utils/auth';
 
 const CreateTicket = () => {
   const [newTicket, setNewTicket] = useState<TicketData | undefined>(
@@ -29,6 +30,10 @@ const CreateTicket = () => {
       console.error('Failed to retrieve user info', err);
     }
   };
+  if(!auth.loggedIn()){
+    auth.logout();
+     return;
+  }
 
   useEffect(() => {
     getAllUsers();

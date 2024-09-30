@@ -7,10 +7,18 @@ interface JwtPayload {
   username: string;
 }
 
+// // Extend the Request interface to include the user property
+// declare module 'express-serve-static-core' {
+//   interface Request {
+//     user?: JwtPayload;
+//   }
+// }
+
+
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
   // TODO: verify the token exists and add the user data to the request object
   const token = req.headers['authorization']?.split(' ')[1];
-    console.log('Token is here:',token);
+  console.log(token);
   if (!token) {
     return res.status(401).json({ message: 'No token provided' });
   }

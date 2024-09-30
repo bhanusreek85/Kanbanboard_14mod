@@ -10,7 +10,7 @@ const retrieveTickets = async () => {
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${Auth.getToken()}`
+          'Authorization': `Bearer ${Auth.getToken()}`
         }
       }
     );
@@ -34,7 +34,7 @@ const retrieveTicket = async (id: number | null): Promise<TicketData> => {
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${Auth.getToken()}`
+          'Authorization': `Bearer ${Auth.getToken()}`
         }
       }
     );
@@ -42,7 +42,7 @@ const retrieveTicket = async (id: number | null): Promise<TicketData> => {
     const data = await response.json();
 
     if(!response.ok) {
-      throw new Error('Could not invalid API response, check network tab!');
+     throw new Error('Could not invalid API response, check network tab!');
     }
     return data;
   } catch (err) {
@@ -58,14 +58,13 @@ const createTicket = async (body: TicketData) => {
         method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${Auth.getToken()}`
+            'Authorization': `Bearer ${Auth.getToken()}`
           },
         body: JSON.stringify(body)
       }
 
     )
     const data = response.json();
-
     if(!response.ok) {
       throw new Error('invalid API response, check network tab!');
     }
@@ -85,7 +84,7 @@ const updateTicket = async (ticketId: number, body: TicketData): Promise<TicketD
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${Auth.getToken()}`
+          'Authorization': `Bearer ${Auth.getToken()}`
         },
         body: JSON.stringify(body)
       }
@@ -110,14 +109,13 @@ const deleteTicket = async (ticketId: number): Promise<ApiMessage> => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${Auth.getToken()}`
+          'Authorization': `Bearer ${Auth.getToken()}`
         }
       }
     )
     const data = await response.json();
-
     if(!response.ok) {
-      throw new Error('invalid API response, check network tab!');
+       throw new Error('invalid API response, check network tab!');
     }
 
     return data;

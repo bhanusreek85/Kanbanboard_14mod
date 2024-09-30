@@ -25,7 +25,7 @@ export const login = async (req: Request, res: Response) => {
       return;
     }
     const secretKey = process.env.JWT_SECRET_KEY || '389847lskjdfl92347lkaj';
-    const token = jwt.sign({userData }, secretKey, { expiresIn: '1h' });
+    const token = jwt.sign({userData }, secretKey, { expiresIn: '10s' });
       console.log('generated token:',token)
     return res.status(202).json({ token });
   } catch (err) {

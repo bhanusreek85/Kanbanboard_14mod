@@ -1,25 +1,23 @@
-import { useEffect, useState, useLayoutEffect } from 'react';
+import { useEffect, useState, useLayoutEffect} from 'react';
 import { Link } from 'react-router-dom';
-
+import { useOutletContext } from 'react-router-dom';
 import { retrieveTickets, deleteTicket } from '../api/ticketAPI';
 import ErrorPage from './ErrorPage';
 import Swimlane from '../components/Swimlane';
 import { TicketData } from '../interfaces/TicketData';
 import { ApiMessage } from '../interfaces/ApiMessage';
-
 import auth from '../utils/auth';
-
 const boardStates = ['Todo', 'In Progress', 'Done'];
 
 const Board = () => {
   const [tickets, setTickets] = useState<TicketData[]>([]);
   const [error, setError] = useState(false);
-  const [loginCheck, setLoginCheck] = useState(false);
+  const { loggedIn: loginCheck, setLoggedIn: setLoginCheck } = useOutletContext<{ loggedIn: boolean, setLoggedIn: (value: boolean) => void }>();
 
   const checkLogin = () => {
     if(auth.loggedIn()) {
       setLoginCheck(true);
-    }
+    }else{setLoginCheck(false)};
   };
 
   const fetchTickets = async () => {
@@ -58,7 +56,7 @@ const Board = () => {
 
   return (
     <>
-    {
+      {
       !loginCheck ? (
         <div className='login-notice'>
           <h1>

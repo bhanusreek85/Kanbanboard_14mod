@@ -1,14 +1,21 @@
 import { Outlet } from 'react-router-dom';
-
+import {useState} from 'react';
 import Navbar from './components/Navbar';
+import auth from './utils/auth';
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(auth.loggedIn());
 
+  const handleSetLoggedIn = (value:boolean)=>{
+    setLoggedIn(value);
+  };
   return (
     <div className='container'>
-      <Navbar />
+      <Navbar 
+      loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn}  />
       <main>
-        <Outlet />
+        <Outlet  
+         context={{loggedIn, setLoggedIn:handleSetLoggedIn}}/>
       </main>
     </div>
   )

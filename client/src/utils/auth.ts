@@ -10,6 +10,13 @@ class AuthService {
   return null;
   }
 
+  getToken(): string|null {
+    // TODO: return the token
+    return localStorage.getItem('token');
+
+  }
+
+
   loggedIn():boolean {
     // TODO: return a value that indicates if the user is logged in
     const token = this.getToken();
@@ -30,11 +37,6 @@ class AuthService {
     }
   }
 
-  getToken(): string|null {
-    // TODO: return the token
-    return localStorage.getItem('token');
-
-  }
 
   login(idToken: string) {
     // TODO: set the token to localStorage
@@ -48,7 +50,12 @@ class AuthService {
   logout() {
     // TODO: remove the token from localStorage
     // TODO: redirect to the login page
-    localStorage.removeItem('token');
+    const token = this.getToken();
+    if (token) {
+      localStorage.removeItem('token');
+    } else {
+      console.error('Token not found in localStorage');
+    }
     window.location.assign('/login');
   }
 }

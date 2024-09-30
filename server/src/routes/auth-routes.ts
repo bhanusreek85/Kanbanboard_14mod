@@ -8,8 +8,8 @@ dotenv.config();
 export const login = async (req: Request, res: Response) => {
   // TODO: If the user exists and the password is correct, return a JWT token
   try {
-     const userData = await User.findOne({
-          where: { username: req.body.username },
+    const userData = await User.findOne({
+      where: { username: req.body.username },
     });
     if (!userData) {
       console.log("Login failed");
@@ -24,9 +24,9 @@ export const login = async (req: Request, res: Response) => {
       res.status(404).json({ message: "login failed, please try again" });
       return;
     }
-    const secretKey = process.env.JWT_SECRET_KEY || '389847lskjdfl92347lkaj';
-    const token = jwt.sign({userData }, secretKey, { expiresIn: '10s' });
-      console.log('generated token:',token)
+    const secretKey = process.env.JWT_SECRET_KEY || "389847lskjdfl92347lkaj";
+    const token = jwt.sign({ userData }, secretKey, { expiresIn: "10m" });
+    console.log("generated token:", token);
     return res.status(202).json({ token });
   } catch (err) {
     console.log("Error logging ", err);
